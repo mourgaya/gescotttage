@@ -1,5 +1,7 @@
 from app import db
 
+# 1 locataire a 0,1 ou plusieurs gites
+# 1 locataire a 0,1 ou plusieurs reservation
 class Locataires(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
@@ -22,7 +24,8 @@ class Locataires(db.Model):
     def __repr__(self):
         return '<Locataires %r>' % (self.name)
 
-
+#1 gite a 1 exploitation journaliere
+#1 gite a 1 reservation ?
 class Gites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
@@ -35,7 +38,7 @@ class Gites(db.Model):
     longitude = db.Column(db.float, index=True, unique=True)
     prixperdaybas = db.Column(db.Integer, index=True, unique=True)
     prixperdaysweek = db.Column(db.Integer, index=True, unique=True)
-    prixper333daysweek = db.Column(db.Integer, index=True, unique=True)
+    prixper3daysweek = db.Column(db.Integer, index=True, unique=True)
     prixperdayhaut = db.Column(db.Integer, index=True, unique=True)
 
     def __init__(self,name,photos=None,plan=None,contrat=None,addresse=None,capacity=None,prixperdaysweek=None,prixperdayweek=None,prixperdayshaut=None)
@@ -43,7 +46,11 @@ class Gites(db.Model):
     def __repr__(self):
         return '<Gites %r>' % (self.name)
 	
-
+# 1 reservation  a 1 locataire
+# 1 reservation a 1 ou plusieurs gites
+# 1 reservation a 1 ou plusieurs paiement
+# 1 reservation a 1 ou plusieurs extras
+# 1 reservation a 1 ou plusieurs  contrats 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     numero = db.Column(db.Integer, index=True, unique=True)
@@ -53,13 +60,11 @@ class Reservation(db.Model):
     nblitsimple = db.Column(db.Integer, index=True, unique=True)
     locataire = db.relationship('Locataire', backref='locataires', lazy='dynamic')
     gites = db.relationship('Gites', backref='gites', lazy='dynamic')
-    debutdb.Column(db.DateTime,index=True,Unique=True)
-    nbjours = db.Column(db.Integer, index=True, unique=True)
     cout = db.Column(db.Integer, index=True, unique=True)
     paiement = deb.relationship()
     events = deb.relationship()
     
-
+# 1 paiement correspond a 1 reservation
 class Paiement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     numero = db.Column(db.Integer, index=True, unique=True)
@@ -79,6 +84,7 @@ class Extra(db.Model):
     name = db.Column(db.String(64), index=True, unique=True)
 
 
+# una exploitation journaliere  est associé a 1 gite
 class exploitejournalier(db.Model)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
@@ -86,6 +92,11 @@ class exploitejournalier(db.Model)
     date = db.Column(db.DateTime, index=True, unique=True)
     ppd = db.Column(db.integer, index=True, unique=True)
     availability = db.Column(db.Boolean, index=True, unique=True)
-    
 
+# un event est associé a  une ou plusieur  exploitation  journaliere
+class event(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    debutdb.Column(db.DateTime,index=True,Unique=True)
+    nbjours = db.Column(db.Integer, index=True, unique=True)
+    	
 
