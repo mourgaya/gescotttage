@@ -21,7 +21,7 @@ class Client(db.Model):
         return '<Locataires %r>' % (self.name)
 
 class Reservation(db.Model):
-    email = db.Column(db.String(120), primary_key=True)
+    email = db.Column(db.String(120), foreign_key=True)
     gites = db.relationship('Gites', backref='gites', lazy='dynamic')
     nbadultes = db.Column(db.Integer, index=True, unique=True)
     datedebut = db.Column(db.DateTime, index=True, unique=True)	
@@ -33,13 +33,14 @@ class Reservation(db.Model):
 
 #(resa1,chaumiere,extra)
 class Planninggite(db.Model):
-    Reservation=
-    Gite=
-    extra=
+    Reservation= foreign
+    Gite= foreign
+    extra= foreign
 
 #(chaumiere,"http://photo","http://plan","http://agenda",7,1,2)
 class Gites(db.Model):
-    name = db.Column(db.String(64),  primary_key=True)
+    id_gite= db.Column(db.Integer(64),  primary_key=True)
+    name = db.Column(db.String(64),unique=True)
     photos_url = db.Column(db.String(120), unique=True)
     plan_url = db.Column(db.String(120),  unique=True)
     agenda_url = db.Column(db.String(120),  unique=True)
@@ -47,36 +48,27 @@ class Gites(db.Model):
     nbsdb = db.Column(db.Integer)
     adresse = db.Column(db.String(120), index=True, unique=True)
     litsup = db.Column(db.integer)
+    coeffstanding = db.Column(db.Float)
     
 
-#("chaumiere",90,150,120,110,100)
+
 class Tarif(db.Model)
     gite = db.Column(db.String(64), primary_key=True)
-    prixmoyend = db.Column(db.Integer)
-    prixhautd = db.Column(db.Integer)
-    prixweek2d = db.Column(db.Integer)
-    prixweek3d = db.Column(db.Integer)
-    prixweek4d = db.Column(db.Integer)
+    libelle = db.Column(db.String(120), unique=True)
+    prix = db.Column(db.Integer)
+    actif = db.Column(db.Boolean)
+
 
     def __init__(self,name,photos=None,plan=None,contrat=None,addresse=None,capacity=None,prixperdaysweek=None,prixperdayweek=None,prixperdayshaut=None)
 	
     def __repr__(self):
         return '<Gites %r>' % (self.name)
 
-#("eric.mourgaya@gmail.com","chaumiere",01,1)
-class Extra(db.Model):
-    email = db.Column(db.String(120), primary_key=True)
-    gites = db.relationship('Gites', backref='gites', lazy='dynamic')
-    TypeExtra = db.relationship('Gites', backref='gites', lazy='dynamic')
-    quantite = db.Column(db.Integer)
 
 
-#(01,"menage",54)#
-#(02,"draps",20)#
-#(03,"lit bebe",0)#
-#(04,"rangement lavevaille",10)#
-class Typeextra(db.Model):
-   CodeExtra = db.Column(db.String(120), primary_key=True)
-   libelle = db.Column(db.String(240),  unique=True)
-   cout = db.Column(db.Integer)
+class Prixref(db.Model)
+    id  =
+    name =
+    value =
+    usecoeff =
 
