@@ -1,41 +1,49 @@
 from app import db
 
 class Client(db.Model):
-    email = db.Column(db.String(120), primary_key=True)
-    name = db.Column(db.String(64), index=True, unique=True)
-    surname = db.Column(db.String(64), unique=True)
+    idclient = db.Column(db.String(60), primary_Key=True,unique=True,autoincrement=True)
+    email = db.Column(db.String(120), unique=True)
+    name = db.Column(db.String(64), index=True)
+    surname = db.Column(db.String(64))
     telephone = db.Column(db.String(64), unique=True)
-    adresse = db.Column(db.String(240),  unique=True)
-    reference = db.Column(db.String(64), index=True, unique=True)	
-    ville = db.Column(db.String(64), unique=True)	
-    pays = db.Column(db.String(64), unique=True)	
+    adresse = db.Column(db.String(240))
+    reference = 	
+    ville = db.Column(db.String(64))	
+    pays = db.Column(db.String(64))	
     codepostal = db.Column(db.Integer)
+    commentaires= db.Colum(db.string(400))
 
-    def __init__(self, name, surname,telephone,email,commentaire=None,addresse=None,reference=None,ville=none,pays=none):
-        self.email = email
-	self.name=name
-	self.surname=surname
-	self.telephone=telephone
 
-    def __repr__(self):
-        return '<Locataires %r>' % (self.name)
+
+class Reference(db.Model):
+     idReference=db.Column(db.String(60), primary_Key=True,unique=True,autoincrement=True)
+     libellereference=db.Column(db.String(64), index=True)
+     urladmin=
+     user=
+     password=
+     
+
 
 class Reservation(db.Model):
-    email = db.Column(db.String(120), foreign_key=True)
-    gites = db.relationship('Gites', backref='gites', lazy='dynamic')
-    nbadultes = db.Column(db.Integer, index=True, unique=True)
-    datedebut = db.Column(db.DateTime, index=True, unique=True)	
-    datefindebut = db.Column(db.DateTime, index=True, unique=True)	
-    nbenfant = db.Column(db.Integer, index=True, unique=True)
-    cout = db.Column(db.Integer, index=True, unique=True)
+    idReservation=sb.Column(db.Integer,primary_key=True)
+    idClient=(db.Integer(120), foreign_key=True) 
+    nbadultes = db.Column(db.Integer)
+    datedebut = db.Column(db.DateTime)	
+    datefindebut = db.Column(db.DateTime)	
+    dateContact = db.Column(db.DateTime)	
+    nbenfant = db.Column(db.Integer)
+    cout = db.Column(db.Float)
     montantaccompte = db.Column(db.Integer, index=True, unique=True)# 0  accompte non payé
     indicateurpaiment = db.Column(db.Integer, index=True, unique=True)# 1 ok
+    montantCaution = db.Column(db.Integer, index=True, unique=True)# 0  accompte non payé
+    libprix=(db.String(120), foreign_key=True)
+    commentaires= db.Colum(db.string(400))
 
-#(resa1,chaumiere,extra)
-class Planninggite(db.Model):
-    Reservation= foreign
-    Gite= foreign
-    extra= foreign
+class ReservationunGite(db.Model):
+    idClient=
+    idGites=
+    idReservation=
+	
 
 #(chaumiere,"http://photo","http://plan","http://agenda",7,1,2)
 class Gites(db.Model):
@@ -46,14 +54,12 @@ class Gites(db.Model):
     agenda_url = db.Column(db.String(120),  unique=True)
     capacity = db.Column(db.Integer)
     nbsdb = db.Column(db.Integer)
-    adresse = db.Column(db.String(120), index=True, unique=True)
+    adresse = db.Column(db.String(120))
     litsup = db.Column(db.integer)
     coeffstanding = db.Column(db.Float)
     
 
-
-class Tarif(db.Model)
-    gite = db.Column(db.String(64), primary_key=True)
+class libPrix(db.Model)
     libelle = db.Column(db.String(120), unique=True)
     prix = db.Column(db.Integer)
     actif = db.Column(db.Boolean)
@@ -66,9 +72,14 @@ class Tarif(db.Model)
 
 
 
-class Prixref(db.Model)
-    id  =
-    name =
-    value =
-    usecoeff =
+class ReservationExtra(db.Model)
+	idClient
+	idGite
+	idReservation
+	idExtra
 
+
+class Extra(db.Model)
+	idExtra
+	prix
+ 	
