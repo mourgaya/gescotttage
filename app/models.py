@@ -1,28 +1,54 @@
 from app import db
+from datetime import datetime
 
 class Client(db.Model):
-    idclient = db.Column(db.String(60), primary_Key=True,unique=True,autoincrement=True)
-    email = db.Column(db.String(120), unique=True)
+    idclient = db.Column(db.Integer, primary_Key=True, unique=True,autoincrement=True)
+    email = db.Column(db.String(120),index=True, unique=True)
     name = db.Column(db.String(64), index=True)
     surname = db.Column(db.String(64))
     telephone = db.Column(db.String(64), unique=True)
     adresse = db.Column(db.String(240))
-    reference = 	
+    reference=db.Column(db.Integer, db.ForeignKey('Reference.idReference'))
     ville = db.Column(db.String(64))	
     pays = db.Column(db.String(64))	
     codepostal = db.Column(db.Integer)
     commentaires= db.Colum(db.string(400))
 
+    def __init__(self, name,surname,email,telephone=None,adresse=None,reference=None,ville=None,pays=None,codepostal=None,commentaire=None):
+        self.name = name
+        self.surname = surname
+        self.email = email 
+        self.telephone = telephone 
+        self.adresse = adresse
+        self.reference = reference 
+        self.ville = ville 
+        self.pays = pays
+        self.codepostal = codepostal 
+        self.commentaire = commentaire 
+        self. = 
+
+    def __repr__(self):
+        return '<UserName %r>' % self.name
 
 
+# un client a une réference,
+#une reference  peut amener plusieurs  clients
+# relation 1-n
+# urladmin permet l'acces a l'interface d'administration de la reference (ie  booking, leboncoin)
 class Reference(db.Model):
      idReference=db.Column(db.String(60), primary_Key=True,unique=True,autoincrement=True)
      libellereference=db.Column(db.String(64), index=True)
-     urladmin=
-     user=
-     password=
+     urladmin=db.Column(db.String(160))
+     user=db.Column(db.String(160)
+     password=db.Column(db.String(160)
+     users= db.relationship('Client', backref='client',lazy='dynamic')
      
 
+# un client peut avoir plusieurs reservations
+#mais une reservation n'appartient qu'a un client
+
+# une reservation est  composee de un ou plusieurs reservationsunGite
+# une reservation1gite est lie a une Reservation
 
 class Reservation(db.Model):
     idReservation=sb.Column(db.Integer,primary_key=True)
@@ -39,7 +65,7 @@ class Reservation(db.Model):
     libprix=(db.String(120), foreign_key=True)
     commentaires= db.Colum(db.string(400))
 
-class ReservationunGite(db.Model):
+class Reservation1Gite(db.Model):
     idClient=
     idGites=
     idReservation=
